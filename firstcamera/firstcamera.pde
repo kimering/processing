@@ -32,14 +32,15 @@ boolean closelyActive;
 boolean closelyAction;
 
 
-door d1 = new door(-300,-55,50,5,80,50,"-x",10,0);      //float x, float y, float z, float w, float h, float l, String direction, float tx, float tz)
-bed b1 = new bed(360,60,290,260,10,100);
-
+door d1 = new door(-300, -55, 50, 5, 80, 50 ,"-x" ,10 ,0);      //float x, float y, float z, float w, float h, float l, String direction, float tx, float tz)
+bed b1 = new bed(360, 60, 290, 260, 10, 100);
+desk dk1 = new desk(360, 0, -230) ;
+  
 long startTime;
 long endTime;
 long ltime;
 
-boolean haveKey = true;
+boolean haveKey = false;
 
 void setup(){
   //fullScreen(P3D);
@@ -87,6 +88,7 @@ void draw(){
   noStroke();
   ambientLight(10, 10, 10);
   
+
   //traceX = eyeX + traceW/3;
   //traceY = eyeY + traceH;
   //traceZ = eyeZ - traceL - 100;
@@ -134,9 +136,9 @@ void draw(){
   }
   
   
-  //pointLight(150, 150, 150, 0, -100, 0);
-  pointLight(20, 20, 20, 0, -100, 0);
-  spotLight(0, 255, 0, 0, -150, 0, 0, 100, 0, 0.3, 1);
+  pointLight(150, 150, 150, 0, -100, 0);
+  //pointLight(20, 20, 20, 0, -100, 0);
+  //spotLight(0, 255, 0, 0, -150, 0, 0, 100, 0, 0.3, 1);
   camera(eyeX, eyeY, eyeZ, seeX, seeY, seeZ, 0.0, 1.0, 0.0);    
   spotLight(handLight, handLight, handLight, eyeX, eyeY, eyeZ, seeX, seeY, seeZ, 0.4, 5);
   
@@ -157,6 +159,8 @@ void draw(){
   b1.collision();
   b1.Action();
   
+  dk1.update();
+ 
   boxCasting();
  
   /*pushMatrix();
@@ -500,11 +504,87 @@ class desk{            // ------------------------------------------------------
   
   void update(){
     pushMatrix();
+      fill(200, 255, 240);
       translate(deskX, deskY, deskZ);
+      pushMatrix();
+        translate(0, -15, 0);
+        box(200, 10, 380);
+      popMatrix();
+    
+      pushMatrix();
+      translate(0, 30, -85);
+      box(200, 80, 20);
+      popMatrix();
       
-    popMatrix();
+      pushMatrix();
+      translate(0, 30, 180);
+      box(200, 80, 20);
+      popMatrix();
+      
+      //upper drawer
+      //change upperX to close(+) or open(-)
+      pushMatrix();
+      float upperX = 0;
+      translate(upperX, 5, 135);
+      fill(255, 255, 200);
+        pushMatrix();
+        translate(0, 0, -30);
+        box(200, 30, 10);
+        popMatrix();
+        pushMatrix();
+        translate(0, 0, 30);
+        box(200, 30, 10);
+        popMatrix();
+        pushMatrix();
+        translate(0, 15, 0);
+        box(200, 10, 70);
+        popMatrix();
+      popMatrix();
+            
+      //lower drawer
+      //change lowerX to close(+) or open(-)
+      pushMatrix();
+      float lowerX = 0;
+      translate(lowerX, 45, 135);
+      fill(255, 200, 255);
+       pushMatrix();
+        translate(0, 0, -30);
+        box(200, 40, 10);
+        popMatrix();
+        pushMatrix();
+        translate(0, 0, 30);
+        box(200, 40, 10);
+        popMatrix();
+        pushMatrix();
+        translate(0, 17.5, 0);
+        box(200, 10, 70);
+        popMatrix();
+      //box(200, 45, 70);
+      popMatrix();
+      
+      noFill();
+      popMatrix();
   }
   
+}
+
+class closet{          // ------------------------------------------------------------ closet ----------------------------------------------------------------------
+ float closetX, closetY, closetZ;
+ 
+ closet(float x, float y, float z) {
+   closetX = x;
+   closetY = y;
+   closetZ = z;
+ }
+ 
+ void update(){
+   pushMatrix();
+     translate(closetX, closetY, closetZ);
+     
+   popMatrix();
+     
+ }
+ 
 }
 
 void bottom(){            // ---------------------------------------------------------------------- wall bottom --------------------------------------------------------------
