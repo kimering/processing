@@ -28,13 +28,18 @@ boolean doorAction;
 boolean doorOpen;
 int doorActionTime;
 
+boolean deskUpperAction;
+boolean deskUpperActive;
+boolean deskLowerAction;
+boolean deskLowerActive;
+
 boolean closelyActive;
 boolean closelyAction;
-
 
 door d1 = new door(-300, -55, 50, 5, 80, 50 ,"-x" ,10 ,0);      //float x, float y, float z, float w, float h, float l, String direction, float tx, float tz)
 bed b1 = new bed(360, 60, 290, 260, 10, 100);
 desk dk1 = new desk(360, 0, -230) ;
+closet c = new closet(-360, -20, -285);
   
 long startTime;
 long endTime;
@@ -70,6 +75,11 @@ void setup(){
   doorActive = false;
   doorAction = false;
   doorOpen = false;
+  
+  deskUpperAction = true;
+  deskUpperActive = false;
+  deskLowerAction = true;
+  deskLowerActive = true;
   
   handLight = 0;
   
@@ -161,6 +171,8 @@ void draw(){
   
   dk1.update();
  
+  c.update();
+  
   boxCasting();
  
   /*pushMatrix();
@@ -494,12 +506,14 @@ class bed{                  // -------------------------------------------------
 
 class desk{            // ------------------------------------------------------------ desk ----------------------------------------------------------------------
   float deskX, deskY, deskZ;
-  
+  float upperX, lowerX;
   desk(float x, float y, float z){
     deskX = x;
     deskY = y;
     deskZ = z;
     
+    upperX = 0;
+    lowerX = 0;    
   }
   
   void update(){
@@ -508,60 +522,76 @@ class desk{            // ------------------------------------------------------
       translate(deskX, deskY, deskZ);
       pushMatrix();
         translate(0, -15, 0);
-        box(200, 10, 380);
+        box(150, 10, 300);
       popMatrix();
     
       pushMatrix();
-      translate(0, 30, -85);
-      box(200, 80, 20);
-      popMatrix();
-      
-      pushMatrix();
-      translate(0, 30, 180);
-      box(200, 80, 20);
-      popMatrix();
-      
-      //upper drawer
-      //change upperX to close(+) or open(-)
-      pushMatrix();
-      float upperX = 0;
-      translate(upperX, 5, 135);
-      fill(255, 255, 200);
         pushMatrix();
-        translate(0, 0, -30);
-        box(200, 30, 10);
+        translate(0, 30, -85);
+        box(150, 80, 20);
         popMatrix();
-        pushMatrix();
-        translate(0, 0, 30);
-        box(200, 30, 10);
-        popMatrix();
-        pushMatrix();
-        translate(0, 15, 0);
-        box(200, 10, 70);
-        popMatrix();
-      popMatrix();
+        translate(0, 0, -40);  
+          pushMatrix();
+          translate(0, 30, 180);
+          box(150, 80, 20);
+          popMatrix();
+          
+          //upper drawer
+          //change upperX to close(+) or open(-)
+          pushMatrix();
+          float upperX = 0;
+          translate(upperX, 5, 135);
+          fill(255, 255, 200);
+            pushMatrix();
+            translate(0, 0, -30);
+            box(150, 30, 10);
+            popMatrix();
+            pushMatrix();
+            translate(0, 0, 30);
+            box(150, 30, 10);
+            popMatrix();
+            pushMatrix();
+            translate(0, 15, 0);
+            box(150, 10, 70);
+            popMatrix();
+          popMatrix();
+                
+          //lower drawer
+          //change lowerX to close(+) or open(-)
+          pushMatrix();
+        
+          //if( (lowerX<=0) && (lowerX>=-60)){
+            println("lowerActive : " + deskLowerAction);
             
-      //lower drawer
-      //change lowerX to close(+) or open(-)
-      pushMatrix();
-      float lowerX = 0;
-      translate(lowerX, 45, 135);
-      fill(255, 200, 255);
-       pushMatrix();
-        translate(0, 0, -30);
-        box(200, 40, 10);
-        popMatrix();
-        pushMatrix();
-        translate(0, 0, 30);
-        box(200, 40, 10);
-        popMatrix();
-        pushMatrix();
-        translate(0, 17.5, 0);
-        box(200, 10, 70);
-        popMatrix();
-      //box(200, 45, 70);
-      popMatrix();
+            if(!deskLowerAction){
+              lowerX--;
+              if( lowerX<-60 ) lowerX = -60;
+              else if( lowerX>0 ) lowerX = 0;
+            }
+            else if(deskLowerAction){
+             lowerX++; 
+             if( lowerX<-60 ) lowerX = -60;
+             else if( lowerX>0 ) lowerX = 0;
+            }
+         // }
       
+          translate(lowerX, 45, 135);
+          fill(255, 200, 255);
+          pushMatrix();
+            translate(0, 0, -30);
+            box(150, 40, 10);
+            popMatrix();
+            pushMatrix();
+            translate(0, 0, 30);
+            box(150, 40, 10);
+            popMatrix();
+            pushMatrix();
+            translate(0, 17.5, 0);
+            box(150, 10, 70);
+            popMatrix();
+          //box(200, 45, 70);
+          popMatrix();
+        popMatrix();
       noFill();
       popMatrix();
   }
@@ -580,7 +610,14 @@ class closet{          // ------------------------------------------------------
  void update(){
    pushMatrix();
      translate(closetX, closetY, closetZ);
-     
+     fill(0);
+     //box(400, 160, 80);
+     translate(0, 80, 0);
+     box(400, 20, 80);
+  
+  
+  
+   noFill();
    popMatrix();
      
  }
@@ -771,7 +808,7 @@ void keyPressed(){          //--------------------------------------------------
     case 68:    // right
       cameraRight = true;
       break;
-    case 69:    // E: action
+    case 69:    // E: actionFkeyF
       if(doorActive){
         doorAction = true;
         doorActionTime = millis();
@@ -783,7 +820,23 @@ void keyPressed(){          //--------------------------------------------------
           closelyAction = false;
         }
       }
+      
+      if(deskUpperActive) {
+        
+        
+        
+      }
+      if(deskLowerActive){
+        if(deskLowerAction) {
+          deskLowerAction = false;
+        }
+        else if(!deskLowerAction) {
+         deskLowerAction = true; 
+        }
+      }
+      
       break;
+      
   }
 }
 
