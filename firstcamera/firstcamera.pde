@@ -52,16 +52,8 @@ boolean deskUpperActive;
 boolean deskLowerAction;
 boolean deskLowerActive;
 
-<<<<<<< HEAD
 boolean roomLight = false;
 
-=======
-boolean closetActive;
-boolean closetAction;
-
-boolean closelyActive;
-boolean closelyAction;
->>>>>>> origin/kimering
 
 boolean keyActive;
 boolean keyAction;
@@ -135,13 +127,10 @@ void setup(){
   doorAction = false;
   doorOpen = false;
   
-  deskUpperAction = false;
+  deskUpperAction = true;
   deskUpperActive = false;
   deskLowerAction = true;
   deskLowerActive = true;
-  
-  closetActive = true;
-  closetAction = false;
   
   handLight = 0;
   
@@ -775,13 +764,11 @@ class desk{            // ------------------------------------------------------
 
 class closet{          // ------------------------------------------------------------ closet ----------------------------------------------------------------------
  float closetX, closetY, closetZ;
- float closetRate;
  
  closet(float x, float y, float z) {
    closetX = x;
    closetY = y;
    closetZ = z;
-   closetRate = PI;
  }
  
  void update(){
@@ -816,23 +803,12 @@ class closet{          // ------------------------------------------------------
      
      
      //draw door(?)
-     if(closetAction){
-        closetRate += PI/36;
-        if( closetRate<PI ) closetRate = PI;
-        else if( closetRate>PI+PI/9*7 ) closetRate = PI+PI/9*7;
-      }
-      else if(!closetAction){
-       closetRate -= PI/36; 
-       if( closetRate<PI ) closetRate = PI;
-       else if( closetRate>PI+PI/9*7 ) closetRate = +PI/9*7;
-      }
-
      fill(170, 180, 255);
      pushMatrix();
      translate(0, 0, 40);
        pushMatrix();
          translate(60, 0, 0);
-         rotateY(closetRate);
+         rotateY(PI+PI/9*7);
          pushMatrix();
          translate(30, -10, 0);
          box(60, 170, 10);
@@ -841,7 +817,7 @@ class closet{          // ------------------------------------------------------
        
        pushMatrix();
          translate(-60, 0, 0);
-         rotateY(-closetRate);
+         rotateY(PI);
          pushMatrix();
          translate(-30, -10, 0);
          box(60, 170, 10);
@@ -1344,7 +1320,6 @@ void menu(){
 
 void keyPressed(){          //------------------------------------------------------ keyPressed ----------------------------------------------------------
   //println(keyCode);
-<<<<<<< HEAD
   if(cameraActive){
     switch(keyCode){
       case 87:    // up
@@ -1363,32 +1338,6 @@ void keyPressed(){          //--------------------------------------------------
         if(doorActive){
           doorAction = true;
           doorActionTime = millis();
-=======
-  switch(keyCode){
-    case 87:    // up
-      cameraFront = true;
-      break;
-    case 83:    // down
-      cameraBack = true;
-      break;
-    case 65:    // left
-      cameraLeft = true;
-      break;
-    case 68:    // right
-      cameraRight = true;
-      break;
-    case 69:    // E: actionFkeyF
-      if(doorActive){
-        doorAction = true;
-        doorActionTime = millis();
-      }
-      
-      if(closelyActive){
-        if(!closelyAction){
-          closelyAction = true;
-        }else{
-          closelyAction = false;
->>>>>>> origin/kimering
         }
         if(closelyActive){
           if(!closelyAction){
@@ -1401,24 +1350,8 @@ void keyPressed(){          //--------------------------------------------------
           haveKey = true;
           keyActionTime = millis();
         }
-<<<<<<< HEAD
         break;
     }
-=======
-      }
-      
-      if(closetActive){
-        if(closetAction) {
-          closetAction = false;
-        }
-        else if(!closetAction) {
-         closetAction = true; 
-        }
-      }
-      
-      break;
-      
->>>>>>> origin/kimering
   }
 }
 
