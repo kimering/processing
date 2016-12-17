@@ -39,7 +39,7 @@ boolean closelyAction;
 door d1 = new door(-300, -55, 50, 5, 80, 50 ,"-x" ,10 ,0);      //float x, float y, float z, float w, float h, float l, String direction, float tx, float tz)
 bed b1 = new bed(360, 60, 290, 260, 10, 100);
 desk dk1 = new desk(360, 0, -230) ;
-closet c = new closet(-360, -20, -285);
+closet c = new closet(-180, -20, -285);
   
 long startTime;
 long endTime;
@@ -521,19 +521,19 @@ class desk{            // ------------------------------------------------------
       fill(200, 255, 240);
       translate(deskX, deskY, deskZ);
       pushMatrix();
-        translate(0, -15, 0);
-        box(150, 10, 300);
+        translate(0, -15, 10);
+        box(150, 10, 270);
       popMatrix();
     
       pushMatrix();
         pushMatrix();
         translate(0, 30, -85);
-        box(150, 80, 20);
+        box(150, 80, 12);
         popMatrix();
         translate(0, 0, -40);  
           pushMatrix();
-          translate(0, 30, 180);
-          box(150, 80, 20);
+          translate(0, 30, 175);
+          box(150, 80, 12);
           popMatrix();
           
           //upper drawer
@@ -543,16 +543,20 @@ class desk{            // ------------------------------------------------------
           translate(upperX, 5, 135);
           fill(255, 255, 200);
             pushMatrix();
-            translate(0, 0, -30);
+            translate(0, 2.5, -30);
             box(150, 30, 10);
             popMatrix();
             pushMatrix();
-            translate(0, 0, 30);
+            translate(0, 2.5, 30);
             box(150, 30, 10);
             popMatrix();
             pushMatrix();
             translate(0, 15, 0);
             box(150, 10, 70);
+            popMatrix();
+            pushMatrix();
+            translate(-80, 2.5, 0);
+            box(10, 35, 70);
             popMatrix();
           popMatrix();
                 
@@ -578,16 +582,20 @@ class desk{            // ------------------------------------------------------
           translate(lowerX, 45, 135);
           fill(255, 200, 255);
           pushMatrix();
-            translate(0, 0, -30);
-            box(150, 40, 10);
+            translate(0, 2.5, -30);
+            box(150, 35, 10);
             popMatrix();
             pushMatrix();
-            translate(0, 0, 30);
-            box(150, 40, 10);
+            translate(0, 2.5, 30);
+            box(150, 35, 10);
             popMatrix();
             pushMatrix();
             translate(0, 17.5, 0);
             box(150, 10, 70);
+            popMatrix();
+            pushMatrix();
+            translate(-80, 2.5, 0);
+            box(10, 40, 70);
             popMatrix();
           //box(200, 45, 70);
           popMatrix();
@@ -610,12 +618,70 @@ class closet{          // ------------------------------------------------------
  void update(){
    pushMatrix();
      translate(closetX, closetY, closetZ);
-     fill(0);
-     //box(400, 160, 80);
-     translate(0, 80, 0);
-     box(400, 20, 80);
+     fill(200, 200, 0);
+     //box(120, 160, 80);
+     pushMatrix();
+     translate(0, 70, 0);
+     box(120, 10, 80);
+     popMatrix();
+     
+     pushMatrix();
+     translate(0, -90, 0);
+     box(120, 10, 80);
+     popMatrix();
+     
+     pushMatrix();
+     translate(-55, -10, 0);
+     box(10, 160, 80);
+     popMatrix();
+     
+     pushMatrix();
+     translate(55, -10, 0);
+     box(10, 160, 80);
+     popMatrix();
   
+     pushMatrix();
+     translate(0, -10, -35);
+     box(120, 160, 10);
+     popMatrix();
+     
+     
+     //draw door(?)
+     fill(170, 180, 255);
+     pushMatrix();
+     translate(0, 0, 40);
+       pushMatrix();
+         translate(60, 0, 0);
+         rotateY(PI+PI/9*7);
+         pushMatrix();
+         translate(30, -10, 0);
+         box(60, 170, 10);
+         popMatrix();
+       popMatrix();
+       
+       pushMatrix();
+         translate(-60, 0, 0);
+         rotateY(PI);
+         pushMatrix();
+         translate(-30, -10, 0);
+         box(60, 170, 10);
+         popMatrix();
+       popMatrix();
+     popMatrix();
+     
+     //draw legs
+     fill(60);
+     pushMatrix();
+     translate(50, 85, 0);
+     box(20, 20, 80);
+     popMatrix();
+       
+     pushMatrix();
+     translate(-50, 85, 0);
+     box(20, 20, 80);
+     popMatrix();  
   
+    
   
    noFill();
    popMatrix();
